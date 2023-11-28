@@ -23,8 +23,8 @@ public class PracticeFormTest {
         open("/automation-practice-form");
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('#footer').remove()");
-        executeJavaScript("$('#app > header').remove()");
-        executeJavaScript("$('#app > div > div > div.pattern-backgound.playgound-header').remove()");
+        executeJavaScript("$('.header').remove()");
+        executeJavaScript("$('.pattern-backgound.playgound-header').remove()");
 
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
