@@ -4,8 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.dom.DOMCryptoContext;
-
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,12 +14,8 @@ public class PracticeFormTest {
     @BeforeAll
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1540x1178";
+        Configuration.browserSize = "1920x1280";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
-        Configuration.timeout = 5000;
-
-
     }
 
     @Test
@@ -32,6 +27,7 @@ public class PracticeFormTest {
         executeJavaScript("$('#app > div > div > div.pattern-backgound.playgound-header').remove()");
 
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+
         $("#firstName").setValue("Alex");
         $("#lastName").setValue("Ivanov");
         $("#userEmail").setValue("alex@test.com");
@@ -43,20 +39,27 @@ public class PracticeFormTest {
         $(".react-datepicker__day--017").click();
         $("#subjectsInput").setValue("Physics").pressEnter();
         $("#hobbiesWrapper").$(byText("Reading")).click();
-
         $("#uploadPicture").uploadFromClasspath("Img/Pic.png");
         $("#currentAddress").setValue("Some street 1");
         $("#state").click();
         $("#stateCity-wrapper").$(byText("NCR")).click();
         $("#city").click();
         $("#stateCity-wrapper").$(byText("Delhi")).click();
+
         $("#submit").click();
 
 
-//
-//        $("#output #name").shouldHave(text("Alex"));
-//        $("#output #email").shouldHave(text("alex@egorov.com"));
-//        $("#output #currentAddress").shouldHave(text("Some street 1"));
-//        $("#output #permanentAddress").shouldHave(text("Another street 1"));
+        $(".modal-content").should(appear);
+        $(".table-responsive").shouldHave(text("Alex Ivanov"));
+        $(".table-responsive").shouldHave(text("alex@test.com"));
+        $(".table-responsive").shouldHave(text("Male"));
+        $(".table-responsive").shouldHave(text("1234567890"));
+        $(".table-responsive").shouldHave(text("17 July,2007"));
+        $(".table-responsive").shouldHave(text("Physics"));
+        $(".table-responsive").shouldHave(text("Reading"));
+        $(".table-responsive").shouldHave(text("Pic.png"));
+        $(".table-responsive").shouldHave(text("Some street 1"));
+        $(".table-responsive").shouldHave(text("NCR Delhi"));
+        $("#closeLargeModal").should(appear);
     }
 }
